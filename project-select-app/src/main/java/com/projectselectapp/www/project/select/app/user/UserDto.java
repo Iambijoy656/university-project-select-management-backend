@@ -3,14 +3,11 @@ package com.projectselectapp.www.project.select.app.user;
 import jakarta.persistence.*;
 import lombok.Data;
 
-
 import java.util.Date;
-@Entity
+
 @Data
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
+public class UserDto {
     private Integer id;
     private String name;
     private String email;
