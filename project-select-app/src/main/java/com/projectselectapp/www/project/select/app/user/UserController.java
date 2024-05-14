@@ -1,14 +1,15 @@
 package com.projectselectapp.www.project.select.app.user;
 
 
-import com.projectselectapp.www.project.select.app.student.Student;
 import com.projectselectapp.www.project.select.app.student.StudentRepository;
-import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -20,18 +21,25 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
-
-
     @GetMapping("get-all-user")
-    public List<User> getAll(){
+    public List<User> getAll() {
         return userRepository.findAll();
     }
 
 
-
-
-
-
+    @PostMapping("/login")
+    public Object login(@RequestBody LoginDto user) {
+        Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
+        if(optionalUser.isPresent() && optionalUser.get().getPassword().equals(user.getPassword())){
+            Map<String, String> userDetails = new HashMap<>();
+            userDetails.put("email", optionalUser.get().getEmail());
+            userDetails.put("name", optionalUser.get().getName());
+            userDetails.put("role", optionalUser.get().getRole());
+            return ResponseEntity.ok().body(userDetails);
+        }else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
+        }
+    }
 
 
 }
