@@ -1,13 +1,19 @@
 package com.projectselectapp.www.project.select.app.project;
 
+import com.projectselectapp.www.project.select.app.student.Student;
+import com.projectselectapp.www.project.select.app.teacher.Teacher;
+import com.projectselectapp.www.project.select.app.user.User;
+import com.projectselectapp.www.project.select.app.user.UserDto;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 
 @RestController
@@ -27,6 +33,49 @@ public class ProjectController {
         }
 
     }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/get-all-projects")
+    public List<Project> getAll() {
+        return projectRepository.findAll();
+    }
+
+
+
+    @CrossOrigin(origins = "*")
+    @PutMapping("/update-project")
+    @Transactional
+    public String updateStudent(@RequestBody Project project) throws Exception {
+        if (project.getId() == null) {
+            throw new Exception("Id Not Found.. Please provide project Id");
+        }
+        Project databaseProject = projectRepository.findById(project.getId()).get();
+        copyNonNullProperties(project, databaseProject);
+        projectRepository.save(databaseProject);
+        return "Project update Successfully";
+
+    }
+
+
+
+    public void copyNonNullProperties(Object source, Object destination) {
+        BeanUtils.copyProperties(source, destination, getNullPropertyNames(source));
+    }
+
+    public static String[] getNullPropertyNames(Object source) {
+        final BeanWrapper src = new BeanWrapperImpl(source);
+        java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
+
+        Set<String> emptyNames = new HashSet<String>();
+        for (java.beans.PropertyDescriptor pd : pds) {
+            Object srcValue = src.getPropertyValue(pd.getName());
+            if (srcValue == null) emptyNames.add(pd.getName());
+        }
+
+        String[] result = new String[emptyNames.size()];
+        return emptyNames.toArray(result);
+    }
+
 
 
 }
