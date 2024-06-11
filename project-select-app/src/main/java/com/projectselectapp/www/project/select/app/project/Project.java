@@ -1,5 +1,6 @@
 package com.projectselectapp.www.project.select.app.project;
 
+import com.projectselectapp.www.project.select.app.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,6 +12,9 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String student_id;
+    @OneToOne
+    @JoinColumn
+    private User student_user_id;
     private String title;
     private String object;
     private String mythology;

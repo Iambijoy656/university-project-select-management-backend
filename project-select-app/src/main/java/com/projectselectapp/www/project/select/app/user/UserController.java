@@ -35,6 +35,7 @@ public class UserController {
             userDetails.put("email", optionalUser.get().getEmail());
             userDetails.put("name", optionalUser.get().getName());
             userDetails.put("role", optionalUser.get().getRole());
+            userDetails.put("id", String.valueOf(optionalUser.get().getId()));
             return ResponseEntity.ok().body(userDetails);
         }else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
