@@ -27,6 +27,7 @@ public class StudentController {
 
         Student student = new Student();
         student.setName(user.getName());
+        student.setEmail(user.getEmail());
         student.setUser(user);
         student.setCreateOn(new Date());
         studentRepository.save(student);
@@ -42,10 +43,19 @@ public class StudentController {
     public Student getStudentById(@PathVariable("id") Integer id) throws Exception {
         return studentRepository.findById(id).orElse(new Student());
     }
+
+
+    @GetMapping("get-student-by-email/{email}")
+    public Optional<Student> getStudentByEmail(@PathVariable("email") String email) throws Exception {
+        return Optional.ofNullable(studentRepository.findByEmail(email)
+                .orElseThrow(() -> new Exception("Student not found with email: " + email)));
+    }
+
+
     @CrossOrigin(origins = "*")
     @PutMapping("/update-student")
     @Transactional
-    public String updateStudent(@RequestBody UserDto user) throws Exception {
+    public String updateStudent(@RequestBody User user) throws Exception {
         if (user.getId() == null) {
             throw new Exception("Id Not Found.. Please provide user Id");
         }
@@ -60,6 +70,7 @@ public class StudentController {
 
         Student student = optionalStudent.get();
         student.setName(user.getName());
+        student.setSupervisor(user.getSupervisor());
         student.setUpdateOn(new Date());
         studentRepository.save(student);
         return "Student update Successfully";

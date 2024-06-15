@@ -1,9 +1,6 @@
 package com.projectselectapp.www.project.select.app.project;
 
-import com.projectselectapp.www.project.select.app.student.Student;
-import com.projectselectapp.www.project.select.app.teacher.Teacher;
-import com.projectselectapp.www.project.select.app.user.User;
-import com.projectselectapp.www.project.select.app.user.UserDto;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -13,8 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 public class ProjectController {
@@ -25,9 +23,8 @@ public class ProjectController {
     @Transactional
     public ResponseEntity<String> createProject(@RequestBody Project project) {
         try {
-            System.out.println(project);
             project = projectRepository.save(project);
-            return ResponseEntity.ok("Project Create Successfully"); // Return the saved project
+            return ResponseEntity.ok("Project Create Successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body( e.getMessage());
         }
@@ -40,21 +37,23 @@ public class ProjectController {
         return projectRepository.findAll();
     }
 
-
-
     @CrossOrigin(origins = "*")
     @PutMapping("/update-project")
     @Transactional
-    public String updateStudent(@RequestBody Project project) throws Exception {
-        if (project.getId() == null) {
+    public ResponseEntity<String> updateProject(@RequestBody Project project) {
+        try {
+            if (project.getId() == null) {
             throw new Exception("Id Not Found.. Please provide project Id");
         }
         Project databaseProject = projectRepository.findById(project.getId()).get();
         copyNonNullProperties(project, databaseProject);
         projectRepository.save(databaseProject);
-        return "Project update Successfully";
-
+        return ResponseEntity.status(HttpStatus.OK).body("Successfully updated");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body( e.getMessage());
+        }
     }
+
 
 
 

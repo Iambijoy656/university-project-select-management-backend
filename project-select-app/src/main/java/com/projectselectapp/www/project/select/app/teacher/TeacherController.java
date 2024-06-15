@@ -1,4 +1,5 @@
 package com.projectselectapp.www.project.select.app.teacher;
+import com.projectselectapp.www.project.select.app.student.Student;
 import com.projectselectapp.www.project.select.app.user.User;
 import com.projectselectapp.www.project.select.app.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,38 +64,42 @@ public class TeacherController {
 
     }
 
+
     @CrossOrigin(origins = "*")
     @DeleteMapping("/delete-teacher/{id}")
     @Transactional
     public String deleteTeacher(@PathVariable("id") Integer id) throws Exception {
-        // Check if the ID is null
-        if (id == null) {
-            throw new Exception("ID Not Found. Please provide a user ID");
-        }
-
-
-        Optional<Teacher> optionalTeacher = teacherRepository.findById(id);
-        if (optionalTeacher.isEmpty()) {
-            throw new Exception("No Teacher found with this ID");
-        }
-
-// Get the teacher
-        Teacher teacher = optionalTeacher.get();
+        try {
+            // Check if the ID is null
+            if (id == null) {
+                throw new Exception("ID Not Found. Please provide a user ID");
+            }
+            Optional<Teacher> optionalTeacher = teacherRepository.findById(id);
+            if (optionalTeacher.isEmpty()) {
+                throw new Exception("No teacher found with this ID");
+            }
+// Get the student
+            Teacher teacher = optionalTeacher.get();
 
 // Access the associated user's ID
-        System.out.println(teacher.getUser().getId());
+            System.out.println(teacher.getUser().getId());
 
-        // Check if the user exists
-        Optional<User> optionalUser = userRepository.findById(teacher.getUser().getId());
-        if (optionalUser.isEmpty()) {
-            throw new Exception("No User found with this ID");
+            // Check if the user exists
+            Optional<User> optionalUser = userRepository.findById(teacher.getUser().getId());
+            if (optionalUser.isEmpty()) {
+                throw new Exception("No User found with this ID");
+            }
+            // Delete the teacher
+            teacherRepository.delete(teacher);
+            // Delete the user
+            userRepository.delete(optionalUser.get());
+
+            return "teacher Deleted Successfully";
+        } catch (Exception e) {
+            return e.getMessage();
         }
-        // Delete the user
-        userRepository.deleteById(id);
-        // Delete the student
-        teacherRepository.delete(teacher);
-        return "teacher Deleted Successfully";
     }
+
 
 
 

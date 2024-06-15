@@ -1,5 +1,7 @@
 package com.projectselectapp.www.project.select.app.user;
 
+import com.projectselectapp.www.project.select.app.student.Student;
+import com.projectselectapp.www.project.select.app.teacher.Teacher;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,6 +15,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+    private String phone;
+    private String profileImage;
+    @OneToOne
+    @JoinColumn
+    private Teacher supervisor;
     private String bio;
     private String email;
     private String password;
