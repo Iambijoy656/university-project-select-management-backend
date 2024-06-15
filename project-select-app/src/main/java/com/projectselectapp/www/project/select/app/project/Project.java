@@ -1,5 +1,6 @@
 package com.projectselectapp.www.project.select.app.project;
 
+import com.projectselectapp.www.project.select.app.teacher.Teacher;
 import com.projectselectapp.www.project.select.app.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,10 +21,22 @@ public class Project {
     private String mythology;
     private String ppt;
     private String status;
-    private String supervisor1;
-    private String supervisor2;
-    private String supervisor3;
-    private String supervisor4;
-    private String supervisor5;
+
+    @OneToOne
+    @JoinColumn
+    private Teacher supervisor1;
+    @OneToOne
+    @JoinColumn
+    private Teacher supervisor2;
+    @OneToOne
+    @JoinColumn
+    private Teacher supervisor3;
+    @OneToOne
+    @JoinColumn
+    private Teacher supervisor4;
+    @OneToOne
+    @JoinColumn
+    private Teacher supervisor5;
+
 
 }

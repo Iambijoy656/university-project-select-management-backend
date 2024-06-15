@@ -55,19 +55,6 @@ public class ProjectController {
     }
 
 
-//    @PutMapping("/update-project")
-//    @Transactional
-//    public String updateProject(@RequestBody Project project) throws Exception {
-//        System.out.println(project);
-//        if (project.getId() == null) {
-//            throw new Exception("Id Not Found.. Please provide project Id");
-//        }
-//        Project databaseProject = projectRepository.findById(project.getId()).get();
-//        copyNonNullProperties(project, databaseProject);
-//        projectRepository.save(databaseProject);
-//        return "Project update Successfully";
-//
-//    }
 
 
     public void copyNonNullProperties(Object source, Object destination) {

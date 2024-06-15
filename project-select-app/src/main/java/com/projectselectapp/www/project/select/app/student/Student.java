@@ -1,5 +1,6 @@
 package com.projectselectapp.www.project.select.app.student;
 
+import com.projectselectapp.www.project.select.app.teacher.Teacher;
 import com.projectselectapp.www.project.select.app.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -19,14 +20,20 @@ public class Student {
     private Integer id;
 
     private String name;
-
+    private String email;
     @OneToOne
     @JoinColumn(nullable = false)
     private User user;
+
+    @OneToOne
+    @JoinColumn
+    private Teacher supervisor;
 
     @Column(updatable = false)
     private Date createOn;
 
     @Column(insertable = false)
     private Date updateOn;
+
+
 }
