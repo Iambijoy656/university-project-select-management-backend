@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/Pre_Defense")
-
+@CrossOrigin(origins = "*")
 public class Pre_DefanseController {
 
     @Autowired
