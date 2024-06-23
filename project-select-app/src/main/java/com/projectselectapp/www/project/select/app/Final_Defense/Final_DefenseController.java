@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/Final_Defense")
-
+@CrossOrigin(origins = "*")
 public class Final_DefenseController {
     @Autowired
     private Final_DefenseService final_DefenseService;

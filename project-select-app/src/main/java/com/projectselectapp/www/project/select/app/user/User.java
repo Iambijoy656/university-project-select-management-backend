@@ -16,7 +16,7 @@ public class User {
     private Integer id;
     private String name;
     private String phone;
-    private String profileImage;
+    private String  profileImage;
     @OneToOne
     @JoinColumn
     private Teacher supervisor;
@@ -27,7 +27,7 @@ public class User {
     private String role;
     private String card_id;
     private boolean married_status;
-    private Date dateOfBirth;
+    private String dateOfBirth;
 
 }
 
