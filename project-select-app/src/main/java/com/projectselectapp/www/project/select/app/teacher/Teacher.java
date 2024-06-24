@@ -15,6 +15,7 @@ public class Teacher {
     private Integer id;
 
     private String name;
+    private String email;
 
     @OneToOne
     @JoinColumn(nullable = false)
