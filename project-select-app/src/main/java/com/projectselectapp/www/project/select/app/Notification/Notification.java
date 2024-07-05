@@ -13,7 +13,7 @@ import lombok.*;
 @Entity
 @Table(name = "Nitification")
 
-public class Notification {
+public class                 Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
