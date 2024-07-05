@@ -32,6 +32,9 @@ public class AdminController {
         admin.setUser(user);
         admin.setCreateOn(new Date());
         adminRepository.save(admin);
+
+
+
     }
 
     @GetMapping("/get-all-admin")
@@ -71,7 +74,6 @@ public class AdminController {
 
         Admin admin = optionalAdmin.get();
         admin.setName(user.getName());
-        admin.setSupervisor(user.getSupervisor());
         admin.setUpdateOn(new Date());
         adminRepository.save(admin);
         return "admin update Successfully";

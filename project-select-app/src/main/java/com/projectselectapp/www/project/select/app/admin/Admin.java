@@ -22,11 +22,6 @@ public class Admin {
     @OneToOne
     @JoinColumn(nullable = false)
     private User user;
-
-    @OneToOne
-    @JoinColumn
-    private Teacher supervisor;
-
     @Column(updatable = false)
     private Date createOn;
 
