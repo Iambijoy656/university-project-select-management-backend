@@ -21,6 +21,8 @@ public class Student {
 
     private String name;
     private String email;
+    private String marks;
+    private String followup;
     @OneToOne
     @JoinColumn(nullable = false)
     private User user;

@@ -38,7 +38,7 @@ public class TeacherController {
     }
 
 
-
+    @CrossOrigin(origins = "*")
     @GetMapping("get-teacher-by-email/{email}")
     public Optional<Teacher> getTeacherByEmail(@PathVariable("email") String email) throws Exception {
         return Optional.ofNullable(teacherRepository.findByEmail(email)
