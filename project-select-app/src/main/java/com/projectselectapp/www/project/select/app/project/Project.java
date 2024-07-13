@@ -4,6 +4,7 @@ import com.projectselectapp.www.project.select.app.teacher.Teacher;
 import com.projectselectapp.www.project.select.app.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.ManyToAny;
 
 @Entity
 @Data
@@ -22,19 +23,19 @@ public class Project {
     private String ppt;
     private String status;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn
     private Teacher supervisor1;
-    @OneToOne
+    @ManyToOne
     @JoinColumn
     private Teacher supervisor2;
-    @OneToOne
+    @ManyToOne
     @JoinColumn
     private Teacher supervisor3;
-    @OneToOne
+    @ManyToOne
     @JoinColumn
     private Teacher supervisor4;
-    @OneToOne
+    @ManyToOne
     @JoinColumn
     private Teacher supervisor5;
 

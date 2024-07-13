@@ -18,7 +18,6 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     private String name;
     private String email;
     private String marks;
@@ -27,7 +26,7 @@ public class Student {
     @JoinColumn(nullable = false)
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn
     private Teacher supervisor;
 
